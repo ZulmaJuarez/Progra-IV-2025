@@ -24,6 +24,12 @@
             this.uv = materia.uv;
         },
         guardarMateria() {
+            db.materias.count().then(count => {
+                if (count >= 5) {
+                    alertify.warning('No puedes inscribir más de 5 materias.'); 
+                    return;
+                }
+            });
             let materia = {
                 codigo: this.codigo,
                 nombre: this.nombre,
