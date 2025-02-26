@@ -9,7 +9,8 @@ const app = createApp({
         buscaralumno,
         buscarmateria,
         matricula,
-        inscripcion
+        inscripcion,
+        busqueda, 
     },
     data() {
         return {
@@ -19,7 +20,8 @@ const app = createApp({
                 materia: {mostrar: false},
                 buscarMateria: {mostrar: false},
                 matricula: { mostrar: false },
-                inscripcion: { mostrar: false }
+                inscripcion: { mostrar: false },
+                busqueda: {mostrar: false }
             },
         };
     },
@@ -30,6 +32,9 @@ const app = createApp({
         abrirFormulario(componente) {
             this.forms[componente].mostrar = !this.forms[componente].mostrar;
         },
+        abrirBusqueda() {
+            this.forms.buscarAlumno.mostrar = true;
+        },
         modificar(form, metodo, datos) {
             this.$refs[form][metodo](datos);
         }
@@ -39,7 +44,8 @@ const app = createApp({
             alumnos: '++idAlumno, codigo, nombre, direccion, municipio, departamento, telefono, email, fecha_nacimiento, sexo',
             materias: '++idMateria, codigo, nombre, uv',
             matriculas: '++idMatricula, alumno, fecha, periodo',
-            inscripciones: '++idInscripcion, alumno, fecha, materia'
+            inscripciones: '++idInscripcion, alumno, fecha, materia',
+            busqueda: '++idCriterio, busqueda'
         });
     }
 });

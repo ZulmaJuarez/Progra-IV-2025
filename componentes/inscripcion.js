@@ -37,6 +37,7 @@ const inscripcion = {
     `,
     data() {
         return {
+            matriculasFiltradas: [],
             inscripcion: {
                 alumno: '',
                 fecha: '',
@@ -85,7 +86,7 @@ const inscripcion = {
             }).then(() => {
                 alertify.success("Inscripción guardada exitosamente.");
                 
-                // 💡 Limpiar los campos después de guardar
+                // Limpiar los campos después de guardar
                 this.inscripcion = { alumno: "", fecha: "", materias: [] };
             }).catch(error => {
                 alertify.error("Error al guardar la inscripción: " + error);

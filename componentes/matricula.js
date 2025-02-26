@@ -38,6 +38,7 @@ const matricula = {
 
     data() {
         return {
+            alumnosFiltrados: [], 
             matricula: {
                 alumno: '',
                 fecha: '',
