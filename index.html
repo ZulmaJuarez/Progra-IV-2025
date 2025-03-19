@@ -40,10 +40,10 @@
                                 <a class="nav-link" @click="abrirFormulario('matricula')" href="#">Matricula</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" @click="abrirFormulario('inscripcion')" href="#">Inscripcion</a>
+                                <a class="nav-link" @click="abrirFormulario('inscripcion')" href="#">Inscripción</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" @click="abrirFormulario('busqueda')" href="#">Busqueda</a>                            
+                                <a class="nav-link" @click="abrirFormulario('busqueda')" href="#">Busqueda</a>
                             </li>
                         </ul>
                     </div>
@@ -58,10 +58,9 @@
             <matricula v-show="forms.matricula.mostrar" :forms="forms" ref="matricula" @buscar="buscar('buscarmatricula', 'listarMatricula')"></matricula>
             <inscripcion v-show="forms.inscripcion.mostrar" :forms="forms" ref="inscripcion" @buscar="buscar('buscarinscripcion', 'listarInscripcion')"></inscripcion>
             <busqueda v-show="forms.busqueda.mostrar"ref="busqueda" @modificar="modificar('alumno', 'modificarAlumno', $event)"></busqueda>
-            
-
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.2.0/uuid.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

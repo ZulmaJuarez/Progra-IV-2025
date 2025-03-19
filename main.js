@@ -1,4 +1,5 @@
 const {createApp, ref} = Vue;
+const {v4: uuidv4} = uuid;
 const Dexie = window.Dexie,
     db = new Dexie('db_academico');
 
@@ -10,7 +11,7 @@ const app = createApp({
         buscarmateria,
         matricula,
         inscripcion,
-        busqueda, 
+        busqueda,
     },
     data() {
         return {
@@ -19,7 +20,7 @@ const app = createApp({
                 buscarAlumno: {mostrar: false},
                 materia: {mostrar: false},
                 buscarMateria: {mostrar: false},
-                matricula: { mostrar: false },
+                matricula: {mostrar: false},
                 inscripcion: { mostrar: false },
                 busqueda: {mostrar: false }
             },
@@ -32,17 +33,14 @@ const app = createApp({
         abrirFormulario(componente) {
             this.forms[componente].mostrar = !this.forms[componente].mostrar;
         },
-        abrirBusqueda() {
-            this.forms.buscarAlumno.mostrar = true;
-        },
         modificar(form, metodo, datos) {
             this.$refs[form][metodo](datos);
         }
     },
     created() {
         db.version(1).stores({
-            alumnos: '++idAlumno, codigo, nombre, direccion, municipio, departamento, telefono, email, fecha_nacimiento, sexo',
-            materias: '++idMateria, codigo, nombre, uv',
+            alumnos: 'codigo_transaccion, codigo, nombre, direccion, municipio, departamento, telefono, email, fecha_nacimiento, sexo',
+            materias: 'codigo_transaccion, codigo, nombre, uv',
             matriculas: '++idMatricula, alumno, fecha, periodo',
             inscripciones: '++idInscripcion, alumno, fecha, materia',
             busqueda: '++idCriterio, busqueda'

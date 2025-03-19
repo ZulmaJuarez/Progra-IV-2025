@@ -4,16 +4,18 @@
     data() {
         return {
             accion: 'nuevo',
-            idAlumno: '',
-            codigo: '',
-            nombre: '',
-            direccion: '',
-            municipio: '',
-            departamento: '',
-            telefono: '',
-            email: '',
-            fecha_nacimiento: '',
-            sexo: '',
+            alumno : {
+                codigo: '',
+                nombre: '',
+                direccion: '',
+                municipio: '',
+                departamento: '',
+                telefono: '',
+                email: '',
+                fecha_nacimiento: '',
+                sexo: '',
+                codigo_transaccion: uuidv4()
+            },
         }
     },
     methods: {
@@ -23,47 +25,37 @@
         },
         modificarAlumno(alumno) {
             this.accion = 'modificar';
-            this.idAlumno = alumno.idAlumno;
-            this.codigo = alumno.codigo;
-            this.nombre = alumno.nombre;
-            this.direccion = alumno.direccion;
-            this.municipio = alumno.municipio;
-            this.departamento = alumno.departamento;
-            this.telefono = alumno.telefono;
-            this.email = alumno.email;
-            this.fecha_nacimiento = alumno.fecha_nacimiento;
-            this.sexo = alumno.sexo;
+            this.alumno = {...alumno};
         },
         guardarAlumno() {
-            let alumno = {
-                codigo: this.codigo,
-                nombre: this.nombre,
-                direccion: this.direccion,
-                municipio: this.municipio,
-                departamento: this.departamento,
-                telefono: this.telefono,
-                email: this.email,
-                fecha_nacimiento: this.fecha_nacimiento,
-                sexo: this.sexo
-            };
-            if (this.accion == 'modificar') {
-                alumno.idAlumno = this.idAlumno;
-            }
+            let alumno = {...this.alumno};
             db.alumnos.put(alumno);
-            this.nuevoAlumno();
+            fetch(`private/modulos/alumnos/alumno.php?accion=${this.accion}&alumnos=${JSON.stringify(alumno)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if( data != true ){
+                        alertify.error(data);
+                    }else{
+                        this.nuevoAlumno();
+                        this.$emit('buscar');
+                    }
+                })
+                .catch(error => console.log(error));
         },
         nuevoAlumno() {
             this.accion = 'nuevo';
-            this.idAlumno = '';
-            this.codigo = '';
-            this.nombre = '';
-            this.direccion = '';
-            this.municipio = '';
-            this.departamento = '';
-            this.telefono = '';
-            this.email = '';
-            this.fecha_nacimiento = '';
-            this.sexo = '';
+            this.alumno = {
+                codigo: '',
+                nombre: '',
+                direccion: '',
+                municipio: '',
+                departamento: '',
+                telefono: '',
+                email: '',
+                fecha_nacimiento: '',
+                sexo: '',
+                codigo_transaccion: uuidv4()
+            };
         }
     },
     template: `
@@ -76,53 +68,53 @@
                             <div class="row p-1">
                                 <div class="col-3 col-md-3">CODIGO</div>
                                 <div class="col-9 col-md-4">
-                                    <input required v-model="codigo" type="text" name="txtCodigoAlumno" id="txtCodigoAlumno" class="form-control">
+                                    <input required v-model="alumno.codigo" type="text" name="txtCodigoAlumno" id="txtCodigoAlumno" class="form-control">
                                 </div>
                             </div>
                             <div class="row p-1">
                                 <div class="col-3 col-md-3">NOMBRE</div>
                                 <div class="col-9 col-md-6">
-                                    <input required pattern="[A-Za-zñÑáéíóú ]{3,150}" v-model="nombre" type="text" name="txtNombreAlumno" id="txtNombreAlumno" class="form-control">
+                                    <input required pattern="[A-Za-zñÑáéíóú ]{3,150}" v-model="alumno.nombre" type="text" name="txtNombreAlumno" id="txtNombreAlumno" class="form-control">
                                 </div>
                             </div>
                             <div class="row p-1">
                                 <div class="col-3 col-md-3">DIRECCION</div>
-                                <div class="col-9 col-md-6">
-                                    <input required v-model="direccion" type="text" name="txtDireccionAlumno" id="txtDireccionAlumno" class="form-control">
+                                <div class="col-9 col-md-8">
+                                    <input required v-model="alumno.direccion" type="text" name="txtDireccionAlumno" id="txtDireccionAlumno" class="form-control">
                                 </div>
                             </div>
                             <div class="row p-1">
                                 <div class="col-3 col-md-3">MUNICIPIO</div>
                                 <div class="col-9 col-md-4">
-                                    <input required v-model="municipio" type="text" name="txtMunicipioAlumno" id="txtMunicipioAlumno" class="form-control">
+                                    <input required v-model="alumno.municipio" type="text" name="txtMunicipioAlumno" id="txtMunicipioAlumno" class="form-control">
                                 </div>
                             </div>
                             <div class="row p-1">
                                 <div class="col-3 col-md-3">DEPARTAMENTO</div>
                                 <div class="col-9 col-md-4">
-                                    <input required v-model="departamento" type="text" name="txtDepartamentoAlumno" id="txtDepartamentoAlumno" class="form-control">
+                                    <input required v-model="alumno.departamento" type="text" name="txtDepartamentoAlumno" id="txtDepartamentoAlumno" class="form-control">
                                 </div>
                             </div>
                             <div class="row p-1">
                                 <div class="col-3 col-md-3">TELEFONO</div>
                                 <div class="col-9 col-md-4">
-                                    <input v-model="telefono" type="text" name="txtTelefonoAlumno" id="txtTelefonoAlumno" class="form-control">
+                                    <input v-model="alumno.telefono" type="text" name="txtTelefonoAlumno" id="txtTelefonoAlumno" class="form-control">
                                 </div>
                             </div>
                             <div class="row p-1">
                                 <div class="col-3 col-md-3">EMAIL</div>
                                 <div class="col-9 col-md-6">
-                                    <input v-model="email" type="text" name="txtEmailAlumno" id="txtEmailAlumno" class="form-control">
+                                    <input v-model="alumno.email" type="text" name="txtEmailAlumno" id="txtEmailAlumno" class="form-control">
                                 </div>
                             </div>
                             <div class="row p-1">
                                 <div class="col-3 col-md-3">FECHA DE NACIMIENTO</div>
                                 <div class="col-9 col-md-4">
-                                    <input v-model="fecha_nacimiento" type="date" name="txtFechaNacimientoAlumno" id="txtFechaNacimientoAlumno" class="form-control">
+                                    <input v-model="alumno.fecha_nacimiento" type="date" name="txtFechaNacimientoAlumno" id="txtFechaNacimientoAlumno" class="form-control">
                                 </div>
                             </div>
                             <div class="row p-1">
-                                <div class="col-3 col-md-3">SEXO</div>
+                                 <div class="col-3 col-md-3">SEXO</div>
                                 <div class="col-9 col-md-4">
                                     <select v-model="sexo" class="form-select">
                                         <option value="M">MASCULINO</option>
