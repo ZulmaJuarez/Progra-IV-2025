@@ -1,11 +1,11 @@
 <?php
 include('../../Config/Config.php');
-extract($_REQUEST); //extrae todas las variables
+extract(array: $_REQUEST); //extrae todas las variables
 
 $alumnos = $alumnos ?? '[]';
 $accion = $accion ?? '';
-$class_alumnos = new alumnos($conexion);
-print_r(json_encode($class_alumnos->recibir_datos($alumnos)));
+$class_alumnos = new alumnos(conexion: $conexion);
+print_r(value: json_encode(value: $class_alumnos->recibir_datos(alumnos: $alumnos)));
 class alumnos {
     private $datos = [], $db, $respuesta=['msg'=>'ok'];
 
@@ -17,7 +17,7 @@ class alumnos {
         if($accion == 'consultar'){
             return $this->administrar_alumnos();
         }else{
-            $this->datos = json_decode($alumnos, true);
+            $this->datos = json_decode(json: $alumnos, associative: true);
             return $this->validar_datos();
         }
     }
@@ -76,3 +76,4 @@ class alumnos {
         }
     }
 }
+ 
