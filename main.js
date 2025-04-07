@@ -39,8 +39,8 @@ const app = createApp({
     },
     created() {
         db.version(1).stores({
-            alumnos: 'codigo_transaccion, codigo, nombre, direccion, municipio, departamento, telefono, email, fecha_nacimiento, sexo',
-            materias: 'codigo_transaccion, codigo, nombre, uv',
+            alumnos: 'codigo_transaccion, codigo, nombre, direccion, municipio, departamento, telefono, email, fecha_nacimiento, sexo, hash',
+            materias: 'codigo_transaccion, codigo, nombre, uv.hash',
             matriculas: '++idMatricula, alumno, fecha, periodo',
             inscripciones: '++idInscripcion, alumno, fecha, materia',
             busqueda: '++idCriterio, busqueda'

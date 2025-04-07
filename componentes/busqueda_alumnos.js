@@ -1,5 +1,4 @@
-    
- const buscaralumno = {
+const buscaralumno = {
     data() {
         return {
             buscar: '',
@@ -8,33 +7,26 @@
         }
     },
     methods: {
-        modificarAlumno(alumno){
+        modificarAlumno(alumno) {
             this.$emit('modificar', alumno);
         },
-        eliminarAlumno(alumno) {
-            alertify.confirm('Eliminar Alumno', `¿Esta seguro de eliminar el alumno ${alumno.nombre}?`, async() => {
-                let respuesta = await fetch(`private/modulos/alumnos/alumno.php?accion=eliminar&alumnos=${JSON.stringify(alumno)}`),
-                    data = await respuesta.json();
-                if( data != true ){
-                    alertify.error(data);
-                }else{
-                    db.alumnos.delete(alumno.codigo_transaccion);
-                    this.listarAlumnos();
+        async eliminarAlumno(alumno) {
+            alertify.confirm('Eliminar Alumno', `¿Está seguro de eliminar el alumno ${alumno.nombre}?`, async () => {
+                try {
+                    await db.alumnos.delete(alumno.codigo_transaccion);
+                    this.listarAlumnos(); // Refrescar la lista después de eliminar
                     alertify.success(`Alumno ${alumno.nombre} eliminado`);
+                } catch (error) {
+                    alertify.error('Error al eliminar el alumno');
+                    console.error(error);
                 }
             }, () => { });
         },
         async listarAlumnos() {
-            this.alumnos = await db.alumnos.filter(alumno => alumno[this.buscarTipo].toLowerCase().includes(this.buscar.toLowerCase())).toArray();
-            if (this.alumnos.length<1) {
-                fetch('private/modulos/alumnos/alumno.php?accion=consultar')
-                    .then(response => response.json())
-                    .then(data =>{
-                        this.alumnos = data;
-                        db.alumnos.bulkAdd(data);
-                    });
-            }
-        },
+            this.alumnos = await db.alumnos
+                .filter(alumno => alumno[this.buscarTipo].toLowerCase().includes(this.buscar.toLowerCase()))
+                .toArray();
+        }
     },
     created() {
         this.listarAlumnos();
@@ -48,14 +40,14 @@
                             <th>BUSCAR POR</th>
                             <th>
                                 <select v-model="buscarTipo" class="form-control">
-                                    <option value="codigo">CODIGO</option>
+                                    <option value="codigo">CÓDIGO</option>
                                     <option value="nombre">NOMBRE</option>
-                                    <option value="direccion">DIRECCION</option>
+                                    <option value="direccion">DIRECCIÓN</option>
                                     <option value="municipio">MUNICIPIO</option>
                                     <option value="departamento">DEPARTAMENTO</option>
-                                    <option value="telefono">TELEFONO</option>
+                                    <option value="telefono">TELÉFONO</option>
                                     <option value="email">EMAIL</option>
-                                    <option vaue="fecha_nacimiento">FECHA NACIMIENTO</option>
+                                    <option value="fecha_nacimiento">FECHA DE NACIMIENTO</option>
                                     <option value="sexo">SEXO</option>
                                 </select>
                             </th>
@@ -64,16 +56,16 @@
                             </th>
                         </tr>
                         <tr>
-                            <th>CODIGO</th>
+                            <th>CÓDIGO</th>
                             <th>NOMBRE</th>
-                            <th>DIRECCION</th>
+                            <th>DIRECCIÓN</th>
                             <th>MUNICIPIO</th>
                             <th>DEPARTAMENTO</th>
-                            <th>TELEFONO</th>
+                            <th>TELÉFONO</th>
                             <th>EMAIL</th>
-                            <th>FECHA NACIMIENTO</th>
+                            <th>FECHA DE NACIMIENTO</th>
                             <th>SEXO</th>
-                            <th></th>
+                            <th>ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,8 +80,7 @@
                             <td>{{ alumno.fecha_nacimiento }}</td>
                             <td>{{ alumno.sexo }}</td>
                             <td>
-                                <button class="btn btn-danger btn-sm" 
-                                    @click.stop="eliminarAlumno(alumno)">DEL</button>
+                                <button class="btn btn-danger btn-sm" @click.stop="eliminarAlumno(alumno)">ELIMINAR</button>
                             </td>
                         </tr>
                     </tbody>

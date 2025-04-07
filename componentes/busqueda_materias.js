@@ -1,5 +1,4 @@
-    
- const buscarmateria = {
+const buscarmateria = {
     data() {
         return {
             buscar: '',
@@ -8,33 +7,21 @@
         }
     },
     methods: {
-        modificarMateria(materia){
+        modificarMateria(materia) {
             this.$emit('modificar', materia);
         },
         eliminarMateria(materia) {
-            alertify.confirm('Eliminar Materia', `¿Esta seguro de eliminar el materia ${materia.nombre}?`, async() => {
-                let respuesta = await fetch(`private/modulos/materias/materia.php?accion=eliminar&materias=${JSON.stringify(materia)}`),
-                    data = await respuesta.json();
-                if( data != true ){
-                    alertify.error(data);
-                }else{
-                    db.materias.delete(materia.codigo_transaccion);
-                    this.listarMaterias();
-                    alertify.success(`Materia ${materia.nombre} eliminado`);
-                }
+            alertify.confirm('Eliminar Materia', `¿Está seguro de eliminar la materia ${materia.nombre}?`, async () => {
+                await db.materias.delete(materia.codigo_transaccion);
+                this.listarMaterias();
+                alertify.success(`Materia ${materia.nombre} eliminada`);
             }, () => { });
         },
         async listarMaterias() {
-            this.materias = await db.materias.filter(materia => materia[this.buscarTipo].toLowerCase().includes(this.buscar.toLowerCase())).toArray();
-            if (this.materias.length<1) {
-                fetch('private/modulos/materias/materia.php?accion=consultar')
-                    .then(response => response.json())
-                    .then(data => {
-                        this.materias = data;
-                        db.materias.bulkAdd(data);
-                    });
-            }
-        },
+            this.materias = await db.materias.filter(materia => 
+                materia[this.buscarTipo].toLowerCase().includes(this.buscar.toLowerCase())
+            ).toArray();
+        }
     },
     created() {
         this.listarMaterias();
@@ -48,7 +35,7 @@
                             <th>BUSCAR POR</th>
                             <th>
                                 <select v-model="buscarTipo" class="form-control">
-                                    <option value="codigo">CODIGO</option>
+                                    <option value="codigo">CÓDIGO</option>
                                     <option value="nombre">NOMBRE</option>
                                     <option value="uv">UV</option>
                                 </select>
@@ -58,9 +45,9 @@
                             </th>
                         </tr>
                         <tr>
-                            <th>CODIGO</th>
+                            <th>CÓDIGO</th>
                             <th>NOMBRE</th>
-                            <th>UV</th>  
+                            <th>UV</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -70,8 +57,7 @@
                             <td>{{ materia.nombre }}</td>
                             <td>{{ materia.uv }}</td>
                             <td>
-                                <button class="btn btn-danger btn-sm" 
-                                    @click.stop="eliminarMateria(materia)">DEL</button>
+                                <button class="btn btn-danger btn-sm" @click.stop="eliminarMateria(materia)">DELETE</button>
                             </td>
                         </tr>
                     </tbody>

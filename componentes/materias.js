@@ -1,11 +1,9 @@
-    
- const materia = {
+const materia = {
     props: ['forms'],
     data() {
         return {
             accion: 'nuevo',
-            materias: [],
-            materia : {
+            materia: {
                 codigo: '',
                 nombre: '',
                 uv: '',
@@ -20,7 +18,7 @@
         },
         modificarMateria(materia) {
             this.accion = 'modificar';
-            this.materia = {...materia};
+            this.materia = { ...materia };
         },
         guardarMateria() {
             let materia = {...this.materia};
@@ -37,14 +35,14 @@
                 })
                 .catch(error => console.log(error));
         },
-        nuevoMateria() {
+        nuevaMateria() {
             this.accion = 'nuevo';
             this.materia = {
                 codigo: '',
                 nombre: '',
                 uv: '',
                 codigo_transaccion: uuidv4()
-            }
+            };
         }
     },
     template: `
@@ -55,7 +53,7 @@
                         <div class="card-header bg-dark text-white">Registro de Materias</div>
                         <div class="card-body">
                             <div class="row p-1">
-                                <div class="col-3 col-md-2">CODIGO</div>
+                                <div class="col-3 col-md-2">CÓDIGO</div>
                                 <div class="col-9 col-md-4">
                                     <input required v-model="materia.codigo" type="text" name="txtCodigoMateria" id="txtCodigoMateria" class="form-control">
                                 </div>
@@ -68,8 +66,8 @@
                             </div>
                             <div class="row p-1">
                                 <div class="col-3 col-md-2">UV</div>
-                                <div class="col-9 col-md-8">
-                                    <input required v-model="materia.uv" type="text" name="txtUVMateria" id="txtUVMateria" class="form-control">
+                                <div class="col-9 col-md-4">
+                                    <input required type="number" min="1" max="10" v-model="materia.uv" name="txtUVMateria" id="txtUVMateria" class="form-control">
                                 </div>
                             </div>
                         </div>

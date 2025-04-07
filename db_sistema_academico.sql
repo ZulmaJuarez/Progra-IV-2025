@@ -46,7 +46,8 @@ CREATE TABLE `alumnos` (
 --
 
 INSERT INTO `alumnos` (`idAlumno`, `codigo`, `nombre`, `direccion`, `municipio`, `departamento`, `telefono`, `email`, `fecha_nacimiento`, `sexo`, `codigo_transaccion`) VALUES
-(4, 'USIS018804', 'Luis Enrique Hernandez', 'Usu', '2626-4545', 'luis@ugb.edu.sv', '993f0858-6e76-4438-93b5-91e1da099a2c');
+(4, 'USIS018804', 'Luis Enrique Hernandez', 'Usu', 'Usu', 'Usu', '2626-4545', 'luis@ugb.edu.sv', '2000-02-20', 'M', '993f0858-6e76-4438-93b5-91e1da099a2c');
+
 
 -- --------------------------------------------------------
 
