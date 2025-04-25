@@ -14,8 +14,7 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        
-        return 'Datos de Alumno'; //mostrar datos
+        return alumno::get(); //mostrar todos los alumnos
     }
 
     /**
@@ -36,7 +35,8 @@ class AlumnoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Alumno::create($request->all());
+        return response()->json(['msg'=>'ok'], 200);
     }
 
     /**
@@ -70,7 +70,20 @@ class AlumnoController extends Controller
      */
     public function update(Request $request, Alumno $alumno)
     {
-        //
+        $alumno::where('codigo_transaccion', $request['codigo_transaccion'])
+        ->update([
+            'codigo' => $request['codigo'],
+            'nombre' => $request['nombre'],
+            'direccion' => $request['direccion'],
+            'municipio' => $request['municipio'],
+            'departamento' => $request['departamento'],
+            'telefono' => $request['telefono'],
+            'email' => $request['email'],
+            'fecha_nacimiento' => $request['fecha_nacimiento'],
+            'sexo' => $request['sexo'],
+            'hash' => $request['hash']
+        ]);
+    return response()->json(['msg'=>'ok'], 200);
     }
 
     /**
@@ -81,6 +94,7 @@ class AlumnoController extends Controller
      */
     public function destroy(Alumno $alumno)
     {
-        //
+        $alumno::where('codigo_transaccion', $request['codigo_transaccion'])->delete();
+        return response()->json(['msg'=>'ok'], 200);
     }
 }

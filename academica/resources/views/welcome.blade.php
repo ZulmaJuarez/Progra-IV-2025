@@ -52,7 +52,17 @@
                     </div>
                 </div>
             </nav>
+            <div class="container-fluid" id="appSistema">
+                <alumno v-show="forms.alumno.mostrar" :forms="forms" ref="alumno" @buscar="buscar('buscar_alumno', 'listarAlumnos')"></alumno>
+                <buscar_alumno v-show="forms.buscarAlumno.mostrar" ref="buscar_alumno" @modificar="modificar('alumno', 'modificarAlumno', $event)"></buscar_alumno>
+                <materia v-show="forms.materia.mostrar" :forms="forms" ref="materia" @buscar="buscar('buscarmateria', 'listarMaterias')"></materia>
+                <buscar_materia v-show="forms.buscarMateria.mostrar" ref="buscar_materia" @modificar="modificar('materia', 'modificarMateria', $event)"></buscar_materia>
+                <matricula v-show="forms.matricula.mostrar" :forms="forms" ref="matricula" @buscar="buscar('buscarmatricula', 'listarMatricula')"></matricula>
+                <inscripcion v-show="forms.inscripcion.mostrar" :forms="forms" ref="inscripcion" @buscar="buscar('buscarinscripcion', 'listarInscripcion')"></inscripcion>
+                <busqueda v-show="forms.busqueda.mostrar"ref="busqueda" @modificar="modificar('alumno', 'modificarAlumno', $event)"></busqueda>
+            </div>
         </div>
-        
+
+        @vite('resources/js/app.js')
     </body>
 </html>
