@@ -20,8 +20,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     </head>
     <body class="antialiased">
-    <div id="app" ref="app">
-        <div class="container-fluid">
+        <div class="container-fluid" id="app">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">
@@ -53,10 +52,10 @@
                 </div>
             </nav>
             <div class="container-fluid" id="appSistema">
-                <alumno v-show="forms.alumno.mostrar" :forms="forms" ref="alumno" @buscar="buscar('buscar_alumno', 'listarAlumnos')"></alumno>
-                <buscar_alumno v-show="forms.buscarAlumno.mostrar" ref="buscar_alumno" @modificar="modificar('alumno', 'modificarAlumno', $event)"></buscar_alumno>
-                <materia v-show="forms.materia.mostrar" :forms="forms" ref="materia" @buscar="buscar('buscarmateria', 'listarMaterias')"></materia>
-                <buscar_materia v-show="forms.buscarMateria.mostrar" ref="buscar_materia" @modificar="modificar('materia', 'modificarMateria', $event)"></buscar_materia>
+                <alumno v-show="forms.alumno.mostrar" :forms="forms" ref="alumno" @buscar="buscar('buscarAlumno', 'listarAlumnos')"></alumno>
+                <buscarAlumno v-show="forms.buscarAlumno.mostrar" ref="buscarAlumno" @modificar="modificar('alumno', 'modificarAlumno', $event)"></buscarAlumno>
+                <materia v-show="forms.materia.mostrar" :forms="forms" ref="materia" @buscar="buscar('buscarMateria', 'listarMaterias')"></materia>
+                <buscarMateria v-show="forms.buscarMateria.mostrar" ref="buscarMateria" @modificar="modificar('materia', 'modificarMateria', $event)"></buscarMateria>
                 <matricula v-show="forms.matricula.mostrar" :forms="forms" ref="matricula" @buscar="buscar('buscarmatricula', 'listarMatricula')"></matricula>
                 <inscripcion v-show="forms.inscripcion.mostrar" :forms="forms" ref="inscripcion" @buscar="buscar('buscarinscripcion', 'listarInscripcion')"></inscripcion>
                 <busqueda v-show="forms.busqueda.mostrar"ref="busqueda" @modificar="modificar('alumno', 'modificarAlumno', $event)"></busqueda>

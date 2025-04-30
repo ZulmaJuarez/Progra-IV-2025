@@ -109,7 +109,7 @@
             guardarAlumno() {
                 let alumno = {...this.alumno},
                     metodo="POST";
-                alumno.hash = CryptoJS.SHA256(JSON.stringify({
+                    alumno.hash = CryptoJS.SHA256(JSON.stringify({
                     codigo: alumno.codigo,
                     nombre: alumno.nombre,
                     direccion: alumno.direccion,

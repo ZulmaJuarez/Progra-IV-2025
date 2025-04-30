@@ -2,16 +2,21 @@ import './bootstrap';
 import { createApp } from 'vue';
 import Dexie from 'dexie';
 import alumno from './components/AlumnoComponent.vue';
-import buscar_alumno from './components/BusquedaAlumnoComponent.vue';
+import buscarAlumno from './components/BusquedaAlumnoComponent.vue';
+import materia from './components/MateriaComponent.vue';
+import buscarMateria from './components/BusquedaMateriaComponent.vue';
+import matricula from './components/MatriculaComponent.vue';
+import inscripcion from './components/InscripcionComponent.vue';
+import busqueda from './components/BusquedaComponent.vue';
 
-window.db = new Dexie('db_academico');
+window.db = new Dexie ('db_academico');
 
 const app = createApp({
     components: {
         alumno,
-        buscar_alumno,
+        buscarAlumno,
         materia,
-        buscarmateria,
+        buscarMateria,
         matricula,
         inscripcion,
         busqueda
